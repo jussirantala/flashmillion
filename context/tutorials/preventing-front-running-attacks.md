@@ -479,6 +479,839 @@ const tx = await contract.executeArbitrage(params, {
 });
 ```
 
+## Sandwich Attacks: Deep Dive
+
+### Understanding Sandwich Attacks
+
+Sandwich attacks represent one of the most sophisticated and profitable forms of MEV extraction, where an attacker places two transactions around a victim's trade - one before (frontrun) and one after (backrun) - to extract value from the price movement caused by the victim's transaction.
+
+#### The Economics of Sandwich Attacks
+
+**Basic Mechanism:**
+```
+Normal Market:
+  Price: $3000 per ETH
+
+Sandwich Attack Flow:
+  1. Bot buys 10 ETH at $3000    → Price moves to $3010
+  2. Victim buys 5 ETH at $3010   → Price moves to $3015
+  3. Bot sells 10 ETH at $3015    → Bot profit: $150
+                                   → Victim loss: $75 (worse execution)
+```
+
+**Profitability Factors:**
+- **Victim trade size:** Larger trades = more price impact = more profit
+- **Pool liquidity:** Lower liquidity = higher price impact
+- **Gas costs:** Must profit enough to cover 2 transactions
+- **Competition:** Other sandwich bots competing for same victim
+
+**Why Sandwiches Are So Effective:**
+1. **Guaranteed profit:** If victim transaction succeeds, sandwich succeeds
+2. **Low risk:** Can simulate exact outcome before submitting
+3. **No capital lockup:** Profit realized in same block
+4. **Scalable:** Can sandwich dozens of victims per block
+
+#### Victim Selection Criteria
+
+Professional sandwich bots like **rusty-sando** and **Ethereum-MEV-BOT** use sophisticated filtering:
+
+**Primary Filters:**
+```rust
+fn is_sandwichable(tx: &Transaction, pool: &Pool) -> bool {
+    // 1. Minimum trade size (must move price significantly)
+    let price_impact = pool.calculate_price_impact(tx.amount);
+    if price_impact < 0.5% {
+        return false;  // Too small to profit from
+    }
+
+    // 2. Sufficient liquidity for our frontrun
+    let our_frontrun = calculate_optimal_frontrun(pool, tx.amount);
+    if pool.liquidity < our_frontrun * 3 {
+        return false;  // Not enough liquidity to execute
+    }
+
+    // 3. Victim's slippage tolerance
+    let min_output = tx.decode_min_output();
+    let price_after_sandwich = simulate_price_after_frontrun(our_frontrun);
+    if min_output > price_after_sandwich {
+        return false;  // Victim will revert
+    }
+
+    // 4. Profitability check
+    let profit = calculate_sandwich_profit(our_frontrun, tx.amount);
+    let gas_cost = estimate_gas_cost(2);  // Frontrun + backrun
+    if profit < gas_cost * 2 {
+        return false;  // Not profitable enough
+    }
+
+    true
+}
+```
+
+**Advanced Selection Criteria:**
+
+1. **Token Safety (Salmonella Detection):**
+   ```rust
+   // Check for honeypot tokens
+   - Blacklist check (known bad tokens)
+   - Bytecode analysis (suspicious patterns)
+   - Simulation test (buy and sell same token)
+   - Transfer restriction check (pausable, owner-controlled)
+   ```
+
+2. **Gas Price Analysis:**
+   - Victim's gas price must be reasonable
+   - Our frontrun must outbid victim
+   - Total gas cost must leave profit margin
+
+3. **Timing Considerations:**
+   - Victim transaction must be in mempool
+   - Enough time to construct and submit bundle
+   - Target block not too far in future
+
+#### Bundle Construction
+
+**Single-Victim Sandwich:**
+```
+Bundle Structure:
+┌────────────────────────────────┐
+│ TX 1: Frontrun (Buy)           │  ← High priority fee
+│   - Buy token at current price │
+│   - Move price up              │
+├────────────────────────────────┤
+│ TX 2: Victim Transaction       │  ← Original transaction
+│   - Executes at worse price    │
+│   - Moves price further up     │
+├────────────────────────────────┤
+│ TX 3: Backrun (Sell)           │  ← Normal priority fee
+│   - Sell token at higher price │
+│   - Capture profit             │
+└────────────────────────────────┘
+```
+
+**Multi-Meat Sandwich (Advanced):**
+
+Rusty-sando pioneered "multi-meat" sandwiches - bundling multiple victims in one sandwich:
+
+```
+Bundle Structure:
+┌────────────────────────────────┐
+│ TX 1: Frontrun (Buy 100 ETH)   │  ← One large frontrun
+├────────────────────────────────┤
+│ TX 2: Victim A (10 ETH swap)   │  ← Multiple victims
+│ TX 3: Victim B (15 ETH swap)   │     trading same pair
+│ TX 4: Victim C (8 ETH swap)    │
+├────────────────────────────────┤
+│ TX 5: Backrun (Sell 100 ETH)   │  ← One large backrun
+└────────────────────────────────┘
+
+Advantages:
+- Amortize gas cost across multiple victims
+- Higher total profit per bundle
+- More efficient capital usage
+- Greater profit margins
+```
+
+**Implementation:**
+```solidity
+// Smart Contract Sandwich Execution
+contract SandwichExecutor {
+    // Frontrun: Buy token before victim
+    function frontrun(
+        address tokenIn,
+        address tokenOut,
+        uint256 amountIn,
+        uint256 minAmountOut,
+        address pool
+    ) external onlyOwner {
+        // Transfer tokens from bot wallet
+        IERC20(tokenIn).transferFrom(msg.sender, address(this), amountIn);
+
+        // Approve pool
+        IERC20(tokenIn).approve(pool, amountIn);
+
+        // Execute swap
+        IUniswapV2Pair(pool).swap(
+            0,  // amount0Out
+            minAmountOut,  // amount1Out
+            address(this),
+            ""
+        );
+    }
+
+    // Backrun: Sell token after victim
+    function backrun(
+        address tokenIn,
+        address tokenOut,
+        uint256 amountIn,
+        uint256 minProfit,
+        address pool
+    ) external onlyOwner {
+        // Execute reverse swap
+        IERC20(tokenIn).approve(pool, amountIn);
+
+        IUniswapV2Pair(pool).swap(
+            minProfit,  // Must get back more than we started with
+            0,
+            msg.sender,  // Send profit back to bot
+            ""
+        );
+    }
+}
+```
+
+### How Professional Bots Execute Sandwiches
+
+#### Rusty-Sando Architecture
+
+**Key Innovations:**
+
+1. **Huff Contract Optimization:**
+   - Written in Huff (low-level EVM assembly)
+   - 30-40% gas savings vs Solidity
+   - Minimal bytecode size
+   - Critical for competitive advantage
+
+2. **Optimal Frontrun Calculation:**
+   ```rust
+   // Mathematical formula for maximum profit
+   fn calculate_optimal_frontrun(
+       reserve_in: U256,
+       reserve_out: U256,
+       victim_amount: U256,
+   ) -> U256 {
+       // Formula: sqrt(R_in * R_out * V_in) - R_in
+       let product = reserve_in
+           .saturating_mul(reserve_out)
+           .saturating_mul(victim_amount);
+
+       let sqrt = sqrt_u256(product);
+       let optimal = sqrt.saturating_sub(reserve_in);
+
+       // Apply 90% safety margin
+       optimal.saturating_mul(U256::from(90)) / U256::from(100)
+   }
+   ```
+
+3. **Salmonella Detection Pipeline:**
+   ```
+   Stage 1: Quick Checks (< 1ms)
+   ├── Blacklist lookup
+   ├── Contract age verification
+   └── Basic bytecode scan
+
+   Stage 2: Static Analysis (1-5ms)
+   ├── Pausable pattern detection
+   ├── Blacklist pattern detection
+   ├── Owner control detection
+   └── Fee-on-transfer detection
+
+   Stage 3: Simulation (5-20ms)
+   ├── Simulate buy transaction
+   ├── Simulate immediate sell
+   ├── Compare expected vs actual output
+   └── Test from different addresses
+   ```
+
+4. **Fast EVM Simulation:**
+   - Uses `revm` (Rust EVM)
+   - Parallel simulation of multiple opportunities
+   - State caching for speed
+   - Sub-10ms simulation time
+
+**Example Detection Flow:**
+```rust
+async fn analyze_pending_transaction(tx: &Transaction) -> Option<Opportunity> {
+    // Step 1: Quick filter (< 1ms)
+    if !is_swap_transaction(tx) {
+        return None;
+    }
+
+    // Step 2: Extract swap parameters (< 1ms)
+    let swap = decode_swap(tx)?;
+
+    // Step 3: Salmonella check (1-20ms)
+    if is_salmonella_token(swap.token).await {
+        return None;
+    }
+
+    // Step 4: Get pool data (cached, < 1ms)
+    let pool = get_pool(swap.pool_address).await?;
+
+    // Step 5: Calculate optimal frontrun (< 1ms)
+    let frontrun = calculate_optimal_frontrun(
+        pool.reserve_in,
+        pool.reserve_out,
+        swap.amount_in,
+    );
+
+    // Step 6: Simulate sandwich (5-10ms)
+    let (frontrun_out, backrun_out) = simulate_sandwich(
+        &pool,
+        frontrun,
+        swap.amount_in,
+    ).await?;
+
+    // Step 7: Calculate profit after gas
+    let profit = backrun_out.saturating_sub(frontrun);
+    let gas_cost = estimate_gas_cost();
+    let net_profit = profit.saturating_sub(gas_cost);
+
+    // Step 8: Profitability check
+    if net_profit > MIN_PROFIT {
+        return Some(Opportunity {
+            victim_tx: tx.clone(),
+            frontrun_amount: frontrun,
+            expected_profit: net_profit,
+        });
+    }
+
+    None
+}
+```
+
+#### Ethereum-MEV-BOT Graph-Based Approach
+
+**Graph Theory for MEV:**
+
+Instead of linearly scanning opportunities, model DeFi as a graph:
+
+```
+Nodes: Tokens (ETH, USDC, DAI, WBTC)
+Edges: Liquidity pools with weights
+Weight: -log(exchange_rate) - fees
+
+Sandwich Detection:
+1. Build graph of all pools
+2. Monitor mempool for large swaps
+3. Calculate price impact on graph
+4. Find optimal frontrun path
+5. Execute sandwich via optimal route
+```
+
+**Multi-Hop Sandwiches:**
+```
+Traditional:
+  Frontrun: USDC → ETH
+  Victim:   USDC → ETH
+  Backrun:  ETH → USDC
+
+Graph-Based (More Profitable):
+  Frontrun: USDC → WBTC → ETH
+  Victim:   USDC → ETH
+  Backrun:  ETH → WBTC → USDC
+
+  Advantage: Lower competition on multi-hop paths
+```
+
+**Sub-10ms Detection:**
+- Custom zero-copy deserialization
+- Lock-free data structures
+- NUMA-aware memory allocation
+- SIMD-optimized calculations
+- Parallel transaction processing (10,000+ TPS)
+
+**Builder Integration Strategy:**
+```rust
+// Submit to multiple builders for higher inclusion rate
+async fn submit_sandwich_bundle(bundle: Bundle) {
+    let builders = vec![
+        Builder::Flashbots,    // Highest reputation
+        Builder::Club48,       // Low latency
+        Builder::Bloxroute,    // High throughput
+        Builder::Blackrazor,   // Sandwich specialist
+        Builder::Titan,        // Multi-chain
+    ];
+
+    // Customize bundle for each builder
+    let futures = builders.iter().map(|builder| {
+        let customized = customize_for_builder(bundle.clone(), builder);
+        submit_to_builder(builder, customized)
+    });
+
+    // Submit to all in parallel
+    join_all(futures).await;
+}
+```
+
+### Defending Against Sandwich Attacks
+
+#### Strategy 1: Use MEV-Protected Infrastructure
+
+**Flashbots Protect RPC:**
+```javascript
+// Send transactions through Flashbots Protect
+const provider = new ethers.providers.JsonRpcProvider(
+    'https://rpc.flashbots.net'
+);
+
+// Your transaction goes directly to block builders
+// Bypasses public mempool completely
+const tx = await wallet.sendTransaction({
+    to: ROUTER_ADDRESS,
+    data: swapCalldata,
+    // ... other params
+});
+```
+
+**Benefits:**
+- Transaction never visible in public mempool
+- Sandwich bots can't see it
+- May still be backrun, but no frontrun possible
+
+**MEV-Share (Revenue Sharing):**
+```javascript
+// Share MEV profits with users
+const mevShareProvider = new MevShareProvider(
+    provider,
+    authSigner,
+    'https://mev-share.flashbots.net'
+);
+
+await mevShareProvider.sendTransaction({
+    ...transaction,
+    hints: {
+        calldata: false,  // Hide calldata
+        contractAddress: true,
+        functionSelector: true,
+    },
+    // Searchers backrun and share profits with you
+});
+```
+
+**CoW Swap (Coincidence of Wants):**
+- Batch auctions instead of instant swaps
+- Solver competition for best execution
+- MEV protection built-in
+- Users get MEV rebates
+
+#### Strategy 2: Optimal Slippage Settings
+
+**The Slippage Dilemma:**
+```
+Too Tight (0.1%):
+- Protection from sandwiches
+- High revert rate
+- Poor user experience
+
+Too Loose (5%):
+- Low revert rate
+- Maximum sandwich vulnerability
+- Terrible execution
+
+Optimal (0.5-1%):
+- Balance protection and execution
+- Calculate based on pool liquidity
+```
+
+**Dynamic Slippage Calculation:**
+```javascript
+async function calculateOptimalSlippage(
+    tokenIn,
+    tokenOut,
+    amountIn,
+    poolAddress
+) {
+    // Get pool reserves
+    const pool = new ethers.Contract(poolAddress, POOL_ABI, provider);
+    const reserves = await pool.getReserves();
+
+    // Calculate price impact
+    const priceImpact = calculatePriceImpact(
+        amountIn,
+        reserves.reserve0,
+        reserves.reserve1
+    );
+
+    // Slippage = price impact + safety buffer + expected MEV
+    const baseSlippage = priceImpact;
+    const safetyBuffer = 0.1;  // 0.1%
+    const mevBuffer = priceImpact * 0.5;  // 50% of price impact
+
+    const optimalSlippage = baseSlippage + safetyBuffer + mevBuffer;
+
+    // Cap at reasonable maximum
+    return Math.min(optimalSlippage, 1.0);  // Max 1%
+}
+
+// Calculate minimum output with optimal slippage
+const expectedOutput = getExpectedOutput(tokenIn, tokenOut, amountIn);
+const slippageBps = await calculateOptimalSlippage(
+    tokenIn,
+    tokenOut,
+    amountIn,
+    poolAddress
+);
+const minOutput = expectedOutput * (1 - slippageBps / 100);
+```
+
+#### Strategy 3: Trade Splitting
+
+**Split Large Trades:**
+```javascript
+// Instead of one large trade susceptible to sandwich
+const largeAmount = ethers.utils.parseEther("100");
+
+// Split into smaller trades
+const numSplits = 5;
+const splitAmount = largeAmount.div(numSplits);
+
+for (let i = 0; i < numSplits; i++) {
+    // Wait random time between trades
+    await sleep(Math.random() * 5000);
+
+    await executeSwap(
+        tokenIn,
+        tokenOut,
+        splitAmount,
+        calculateSlippage(splitAmount)  // Smaller slippage per trade
+    );
+}
+```
+
+**Benefits:**
+- Each trade has lower price impact
+- Less profitable for sandwich bots
+- More total slippage but better execution
+- Harder to frontrun multiple transactions
+
+**Drawbacks:**
+- More gas fees (multiple transactions)
+- Takes longer to execute
+- May miss optimal pricing window
+
+#### Strategy 4: Smart Contract Protection
+
+**Built-in Sandwich Protection:**
+```solidity
+contract SandwichProtectedSwap {
+    // Track recent swaps to detect sandwiches
+    mapping(address => SwapInfo) public recentSwaps;
+
+    struct SwapInfo {
+        uint256 timestamp;
+        uint256 amount;
+        address token;
+    }
+
+    function executeProtectedSwap(
+        address tokenIn,
+        address tokenOut,
+        uint256 amountIn,
+        uint256 minAmountOut,
+        address pool
+    ) external {
+        // Check if this address just made a swap
+        SwapInfo memory recent = recentSwaps[msg.sender];
+
+        // Prevent rapid back-to-back swaps (potential backrun)
+        require(
+            block.timestamp > recent.timestamp + 3,
+            "Too soon after last swap"
+        );
+
+        // Check current pool price vs TWAP
+        uint256 currentPrice = getCurrentPrice(pool);
+        uint256 twapPrice = getTWAPPrice(pool, 5 minutes);
+
+        // Revert if price deviates too much (likely frontrun)
+        uint256 deviation = abs(currentPrice - twapPrice) * 10000 / twapPrice;
+        require(deviation < 50, "Price deviation too high");  // 0.5% max
+
+        // Execute swap
+        uint256 amountOut = IUniswapV2Router(pool).swapExactTokensForTokens(
+            amountIn,
+            minAmountOut,
+            getPath(tokenIn, tokenOut),
+            msg.sender,
+            block.timestamp
+        )[1];
+
+        // Record swap
+        recentSwaps[msg.sender] = SwapInfo({
+            timestamp: block.timestamp,
+            amount: amountOut,
+            token: tokenOut
+        });
+    }
+
+    function getCurrentPrice(address pool) internal view returns (uint256) {
+        (uint112 reserve0, uint112 reserve1,) = IUniswapV2Pair(pool).getReserves();
+        return (reserve1 * 1e18) / reserve0;
+    }
+
+    function getTWAPPrice(address pool, uint256 duration) internal view returns (uint256) {
+        // Use Uniswap V2 TWAP oracle
+        uint256 price0Cumulative = IUniswapV2Pair(pool).price0CumulativeLast();
+        uint256 timeElapsed = block.timestamp - lastUpdateTime[pool];
+
+        return (price0Cumulative - lastPrice0Cumulative[pool]) / timeElapsed;
+    }
+}
+```
+
+#### Strategy 5: Private Order Flow
+
+**Private RPCs:**
+```javascript
+// Use private RPC that doesn't broadcast to public mempool
+const privateProviders = {
+    flashbots: 'https://rpc.flashbots.net',
+    bloxroute: 'https://api.blxrbdn.com',
+    eden: 'https://api.edennetwork.io/v1/rpc',
+    manifold: 'https://api.manifoldfinance.com/v1/rpc',
+};
+
+// Send transaction privately
+const provider = new ethers.providers.JsonRpcProvider(
+    privateProviders.flashbots
+);
+
+const tx = await wallet.connect(provider).sendTransaction({
+    // Your transaction
+});
+```
+
+**Searcher Agreements:**
+- Some MEV searchers offer protection services
+- Pay small fee for protection from other searchers
+- Guarantee no sandwich attacks
+- Example: bloXroute BackRunMe
+
+#### Strategy 6: Limit Orders Instead of Market Orders
+
+**Use Limit Orders:**
+```javascript
+// Instead of market order (vulnerable to sandwich)
+// Use limit order that only executes at desired price
+
+// Example: 1inch Limit Order Protocol
+const limitOrder = {
+    makerAsset: USDC_ADDRESS,
+    takerAsset: ETH_ADDRESS,
+    maker: wallet.address,
+    receiver: wallet.address,
+    makerAmount: ethers.utils.parseUnits("10000", 6),  // 10,000 USDC
+    takerAmount: ethers.utils.parseEther("3.3"),  // Exactly 3.3 ETH
+    // ... other params
+};
+
+// Order waits in orderbook until price is met
+// No mempool exposure, no sandwich risk
+await limitOrderProtocol.fillOrder(limitOrder);
+```
+
+### Real-World Defense Implementation
+
+**Complete Protection Stack:**
+```javascript
+class SandwichProtectionService {
+    async executeProtectedSwap(
+        tokenIn,
+        tokenOut,
+        amountIn,
+        options = {}
+    ) {
+        // Layer 1: Route through MEV-protected aggregator
+        const route = await this.getProtectedRoute(
+            tokenIn,
+            tokenOut,
+            amountIn
+        );
+
+        // Layer 2: Calculate optimal slippage
+        const slippage = await this.calculateDynamicSlippage(
+            tokenIn,
+            tokenOut,
+            amountIn,
+            route
+        );
+
+        // Layer 3: Check if trade should be split
+        const splits = this.shouldSplitTrade(amountIn, route)
+            ? this.calculateOptimalSplits(amountIn)
+            : [amountIn];
+
+        // Layer 4: Use private RPC
+        const provider = this.getPrivateProvider();
+
+        // Layer 5: Execute with all protections
+        for (const splitAmount of splits) {
+            const minOutput = route.expectedOutput
+                .mul(10000 - slippage)
+                .div(10000);
+
+            const tx = await this.buildSwapTransaction(
+                tokenIn,
+                tokenOut,
+                splitAmount,
+                minOutput,
+                route
+            );
+
+            // Submit via Flashbots Protect
+            const result = await provider.sendTransaction(tx);
+
+            // Wait for confirmation
+            await result.wait();
+
+            // Random delay before next split
+            if (splits.length > 1) {
+                await this.randomDelay();
+            }
+        }
+    }
+
+    async getProtectedRoute(tokenIn, tokenOut, amountIn) {
+        // Use CoW Swap, 1inch, or other MEV-protected aggregators
+        const cowSwap = new CoWSwapAPI();
+        const quote = await cowSwap.getQuote({
+            sellToken: tokenIn,
+            buyToken: tokenOut,
+            amount: amountIn,
+            kind: 'sell',
+        });
+
+        return {
+            path: quote.path,
+            expectedOutput: quote.buyAmount,
+            guaranteedOutput: quote.buyAmountAfterFee,
+        };
+    }
+
+    calculateDynamicSlippage(tokenIn, tokenOut, amountIn, route) {
+        // Calculate based on pool depth and historical MEV
+        const priceImpact = this.estimatePriceImpact(amountIn, route);
+        const historicalMEV = this.getHistoricalMEV(tokenIn, tokenOut);
+
+        // Slippage = price impact + 0.1% + historical MEV average
+        return priceImpact + 10 + historicalMEV;  // In basis points
+    }
+
+    shouldSplitTrade(amountIn, route) {
+        // Split if trade is large relative to pool liquidity
+        const poolLiquidity = route.path[0].liquidity;
+        const tradeRatio = amountIn / poolLiquidity;
+
+        return tradeRatio > 0.01;  // Split if > 1% of pool
+    }
+
+    getPrivateProvider() {
+        // Rotate between private RPCs for redundancy
+        const providers = [
+            new FlashbotsProvider(this.signer),
+            new BloxrouteProvider(this.apiKey),
+            new EdenProvider(this.signer),
+        ];
+
+        return providers[Math.floor(Math.random() * providers.length)];
+    }
+}
+```
+
+### Monitoring for Sandwich Attacks
+
+**Detection Script:**
+```javascript
+class SandwichDetector {
+    async detectSandwich(txHash) {
+        const receipt = await provider.getTransactionReceipt(txHash);
+        const block = await provider.getBlock(receipt.blockNumber);
+
+        // Find our transaction index
+        const ourTxIndex = block.transactions.indexOf(txHash);
+
+        // Check transaction before ours (potential frontrun)
+        if (ourTxIndex > 0) {
+            const prevTx = await provider.getTransaction(
+                block.transactions[ourTxIndex - 1]
+            );
+
+            if (this.isSimilarSwap(prevTx, receipt)) {
+                console.warn('Potential frontrun detected!', {
+                    frontrunTx: prevTx.hash,
+                    ourTx: txHash,
+                });
+            }
+        }
+
+        // Check transaction after ours (potential backrun)
+        if (ourTxIndex < block.transactions.length - 1) {
+            const nextTx = await provider.getTransaction(
+                block.transactions[ourTxIndex + 1]
+            );
+
+            if (this.isReverseSwap(nextTx, receipt)) {
+                console.warn('Potential backrun detected!', {
+                    ourTx: txHash,
+                    backrunTx: nextTx.hash,
+                });
+
+                // Calculate value extracted
+                const mevExtracted = await this.calculateMEVExtracted(
+                    prevTx,
+                    receipt,
+                    nextTx
+                );
+
+                console.warn('MEV extracted:',
+                    ethers.utils.formatEther(mevExtracted), 'ETH'
+                );
+            }
+        }
+    }
+
+    isSimilarSwap(tx1, tx2) {
+        // Check if swapping same tokens
+        const params1 = this.decodeSwap(tx1);
+        const params2 = this.decodeSwap(tx2);
+
+        return params1.tokenIn === params2.tokenIn &&
+               params1.tokenOut === params2.tokenOut &&
+               params1.pool === params2.pool;
+    }
+
+    isReverseSwap(tx1, tx2) {
+        // Check if swapping opposite direction
+        const params1 = this.decodeSwap(tx1);
+        const params2 = this.decodeSwap(tx2);
+
+        return params1.tokenIn === params2.tokenOut &&
+               params1.tokenOut === params2.tokenIn &&
+               params1.pool === params2.pool;
+    }
+}
+```
+
+### Key Takeaways
+
+**Understanding the Threat:**
+- Sandwich attacks extract $1-5M daily from Ethereum users
+- Professional bots like rusty-sando are extremely sophisticated
+- Multi-meat sandwiches can target dozens of victims per block
+- Sub-10ms detection means you can't outrun them manually
+
+**Essential Defenses:**
+1. **Use Flashbots Protect RPC** - Eliminates frontrun risk
+2. **MEV-Share** - Get paid for being sandwiched
+3. **CoW Swap** - Batch auctions with built-in protection
+4. **Tight slippage** - Make sandwiches unprofitable
+5. **Private order flow** - Keep transactions hidden
+
+**Advanced Protection:**
+- Graph-based bots can find complex sandwich paths
+- Multi-builder submission increases attack success rate
+- Optimal frontrun formulas maximize profit extraction
+- Your only defense is hiding from mempool or accepting MEV-Share revenue
+
+**The Future:**
+- PBS (Proposer-Builder Separation) changing MEV landscape
+- MEV-Share making sandwiches opt-in revenue sharing
+- More sophisticated graph-based detection emerging
+- Cross-chain MEV creating new attack vectors
+
+**Remember:** If your transaction is in the public mempool and moves price significantly, assume it will be sandwiched by professional bots. Use protection or expect to lose 0.5-2% of trade value to MEV.
+
 ## Best Practices Checklist
 
 ### ✅ Essential Protections
