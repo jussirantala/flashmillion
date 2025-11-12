@@ -1,9 +1,9 @@
 # Flash Loan Arbitrage Documentation Index
 
-**Last Updated:** November 12, 2024
-**Total Files:** 54
+**Last Updated:** November 12, 2025
+**Total Files:** 59
 
-This directory contains comprehensive documentation on flash loans, arbitrage strategies, and implementation examples. All files include source URLs and publication/update dates for reference.
+This directory contains comprehensive documentation on flash loans, arbitrage strategies, MEV attacks, and implementation examples. All files include source URLs and publication/update dates for reference.
 
 ---
 
@@ -12,11 +12,11 @@ This directory contains comprehensive documentation on flash loans, arbitrage st
 | Category | Files | Description |
 |----------|-------|-------------|
 | [Core Documentation](#core-documentation) | 7 files | Official protocol documentation and provider comparisons |
-| [Implementation Tutorials](#implementation-tutorials) | 10 files | Step-by-step guides for building flash loan bots |
+| [Implementation Tutorials](#implementation-tutorials) | 15 files | Step-by-step guides for building flash loan bots and MEV protection |
 | [GitHub Repository Examples](#github-repository-examples) | 36 files | Real implementations from GitHub (18 repos) |
 | [Community Discussions](#community-discussions) | 1 file | Reddit discussions on viability and challenges |
 
-**Total Documentation Files:** 54
+**Total Documentation Files:** 59
 
 ---
 
@@ -46,9 +46,19 @@ Start with `core/flash-loan-providers-comparison.md` for an overview, then read 
 
 ---
 
-## Implementation Tutorials (10 files)
+## Implementation Tutorials (15 files)
 
-Step-by-step guides from industry sources for building flash loan arbitrage systems.
+Step-by-step guides from industry sources for building flash loan arbitrage systems and understanding MEV attacks.
+
+### MEV Attack Documentation (NEW!)
+
+| File | Source | Date | Description |
+|------|--------|------|-------------|
+| `tutorials/mev-front-running-attacks.md` | Multiple sources | 2024-2025 | Comprehensive guide to front-running attacks with detection and protection |
+| `tutorials/mev-back-running-attacks.md` | Multiple sources | 2024-2025 | Back-running MEV attacks and arbitrage opportunities |
+| `tutorials/mev-sandwich-attacks.md` | Multiple sources | 2024-2025 | Sandwich attacks - most profitable and harmful MEV type |
+| `tutorials/mev-transaction-displacement-attacks.md` | Multiple sources | 2024-2025 | Transaction displacement in competitive scenarios |
+| `tutorials/preventing-sandwich-attacks.md` | Multiple sources | 2024-2025 | **Complete protection guide** - Flashbots, CoW Protocol, slippage, smart contracts |
 
 ### Commercial Development Guides
 
@@ -71,9 +81,11 @@ Step-by-step guides from industry sources for building flash loan arbitrage syst
 | `tutorials/furucombo-flashloan-tutorial_dev.md` | Furucombo | 2024-2025 | Extended Furucombo tutorial with strategies |
 
 ### 🎯 Recommended Learning Path
-1. Start with `tutorials/solulab-flash-loan-bot-guide.md` for business context
-2. Follow with `tutorials/tas-flash-loan-bot-2025-guide.md` for 2025 best practices
-3. Try `tutorials/furucombo-flashloan-tutorial.md` for no-code experimentation
+1. **Understand MEV risks first:** Read all four MEV attack guides to understand the competitive landscape
+2. Start with `tutorials/solulab-flash-loan-bot-guide.md` for business context
+3. Follow with `tutorials/tas-flash-loan-bot-2025-guide.md` for 2025 best practices
+4. Learn protection strategies from MEV documentation
+5. Try `tutorials/furucombo-flashloan-tutorial.md` for no-code experimentation
 
 ---
 
@@ -191,8 +203,14 @@ All files include:
 
 | Topic | Recommended Files |
 |-------|------------------|
+| **🆕 MEV Front-Running** | `tutorials/mev-front-running-attacks.md` - Comprehensive guide with detection and protection |
+| **🆕 MEV Back-Running** | `tutorials/mev-back-running-attacks.md` - Arbitrage opportunities and market efficiency |
+| **🆕 MEV Sandwich Attacks** | `tutorials/mev-sandwich-attacks.md` - Most harmful MEV attack type |
+| **🆕 Transaction Displacement** | `tutorials/mev-transaction-displacement-attacks.md` - Competitive scenario attacks |
+| **🆕 Preventing Sandwich Attacks** | `tutorials/preventing-sandwich-attacks.md` - **Complete protection guide with implementation** |
+| **🆕 MEV Protection (All Types)** | All MEV attack guides + prevention guide contain comprehensive protection strategies |
 | **Aave V3 Implementation** | `core/aave-flash-loans-documentation.md`, `examples/github-kmoussai-flash-loan.md`, `examples/github-kaymen99-aave-flashloan-arbitrage.md` |
-| **Flashbots/MEV Protection** | `core/flashbots-documentation.md`, `examples/github-smolmusk-arbi.md` |
+| **Flashbots/MEV Protection** | `core/flashbots-documentation.md`, `examples/github-smolmusk-arbi.md`, `tutorials/mev-*.md` |
 | **Provider Comparison** | `core/flash-loan-providers-comparison.md` |
 | **Beginner Introduction** | `core/techopedia-flash-loan-explained.md`, `tutorials/furucombo-flashloan-tutorial.md` |
 | **Multi-Chain (EVM)** | `examples/github-novustch-Arbitrage-Bot.md` |
@@ -202,7 +220,7 @@ All files include:
 | **Optimal Amount Calculation** | `examples/github-da-bao-jian-swap-optimizer.md` |
 | **Real-Time Monitoring** | `examples/github-Soroushsrd-ArbiSearch.md`, `examples/github-Devilla-eth-arbitrage.md` |
 | **Profitability Analysis** | `tutorials/sahm-capital-flash-loan-profit.md`, `discussions/reddit-flashloan-viability-discussion.md` |
-| **2025 Best Practices** | `tutorials/tas-flash-loan-bot-2025-guide.md` |
+| **2025 Best Practices** | `tutorials/tas-flash-loan-bot-2025-guide.md`, all MEV attack guides |
 | **No-Code Solution** | `tutorials/furucombo-flashloan-tutorial.md` |
 | **Python Analysis** | `examples/github-ccyanxyz-uniswap-arbitrage-analysis.md` |
 | **Rust Implementation** | `examples/github-da-bao-jian-swap-optimizer.md`, `examples/github-Soroushsrd-ArbiSearch.md` |
@@ -248,26 +266,32 @@ All files include:
 
 1. `core/techopedia-flash-loan-explained.md` - Understand the fundamental concept
 2. `core/flash-loan-providers-comparison.md` - Learn about different providers
-3. `discussions/reddit-flashloan-viability-discussion.md` - Reality check on profitability
-4. `tutorials/furucombo-flashloan-tutorial.md` - Try no-code approach first
-5. `core/aave-flash-loans-documentation.md` - Dive into technical details
+3. **🆕 `tutorials/mev-sandwich-attacks.md`** - Understand the biggest threat to your trades
+4. **🆕 `tutorials/preventing-sandwich-attacks.md`** - **MUST READ: How to protect yourself**
+5. `discussions/reddit-flashloan-viability-discussion.md` - Reality check on profitability
+6. `tutorials/furucombo-flashloan-tutorial.md` - Try no-code approach first
+7. `core/aave-flash-loans-documentation.md` - Dive into technical details
 
 ### For Developers
 
-1. `core/aave-flash-loans-documentation.md` - Master the Aave V3 API
-2. `tutorials/tas-flash-loan-bot-2025-guide.md` - Learn modern best practices
-3. `examples/github-manuelinfosec-flash-arb-bot.md` - Study working Solidity code
-4. `core/flashbots-documentation.md` - Understand MEV protection
-5. `examples/github-kmoussai-flash-loan.md` - Advanced Aave integration patterns
+1. **🆕 Read all MEV attack guides** - Essential understanding before building
+2. **🆕 `tutorials/preventing-sandwich-attacks.md`** - **Implement protection in your dApp**
+3. `core/aave-flash-loans-documentation.md` - Master the Aave V3 API
+4. `tutorials/tas-flash-loan-bot-2025-guide.md` - Learn modern best practices
+5. `examples/github-manuelinfosec-flash-arb-bot.md` - Study working Solidity code
+6. `core/flashbots-documentation.md` - Understand MEV protection
+7. `examples/github-kmoussai-flash-loan.md` - Advanced Aave integration patterns
 
 ### For Advanced Implementation
 
-1. All files in `core/` directory - Deep protocol knowledge
-2. `tutorials/solulab-flash-loan-bot-guide.md` - Production architecture
-3. `examples/github-smolmusk-arbi.md` - Production-grade orderbook arbitrage
-4. `examples/github-da-bao-jian-swap-optimizer.md` - Mathematical optimization
-5. `examples/github-Soroushsrd-ArbiSearch.md` - Real-time MEV searching
-6. All `_dev.md` files - Extended technical implementation details
+1. **🆕 All four MEV attack guides** - Complete understanding of competitive landscape
+2. All files in `core/` directory - Deep protocol knowledge
+3. `tutorials/solulab-flash-loan-bot-guide.md` - Production architecture
+4. `examples/github-smolmusk-arbi.md` - Production-grade orderbook arbitrage
+5. `examples/github-da-bao-jian-swap-optimizer.md` - Mathematical optimization
+6. `examples/github-Soroushsrd-ArbiSearch.md` - Real-time MEV searching
+7. **🆕 `tutorials/mev-front-running-attacks.md`** - Detection and prevention strategies
+8. All `_dev.md` files - Extended technical implementation details
 
 ### For Specific Technologies
 
@@ -321,10 +345,10 @@ Compare these two approaches to flash loan arbitrage.
 ### File Count by Category
 
 - **Core Documentation**: 7 files
-- **Implementation Tutorials**: 10 files
+- **Implementation Tutorials**: 15 files (including 5 NEW MEV guides)
 - **GitHub Examples**: 36 files (18 repositories)
 - **Community Discussions**: 1 file
-- **Total**: 54 files
+- **Total**: 59 files
 
 ### Language Distribution (GitHub Examples)
 
@@ -344,13 +368,22 @@ Compare these two approaches to flash loan arbitrage.
 
 ### Update Recency
 
-- **2025 content**: 6 repositories
-- **2024-2025 content**: 38 files
+- **2025 content**: 11 files (6 repositories + 5 NEW MEV guides)
+- **2024-2025 content**: 43 files
 - **2024 content**: 7 core/tutorial files
 - **2023 content**: 3 repositories
 
-**Estimated Total Content**: ~5-7 MB of markdown
-**Estimated Token Count**: ~1.2M-1.5M tokens (all files combined)
+**Estimated Total Content**: ~10-12 MB of markdown
+**Estimated Token Count**: ~1.8M-2.2M tokens (all files combined)
+
+### NEW MEV Protection Documentation
+
+- **Front-Running Attacks**: Comprehensive 600+ line guide
+- **Back-Running Attacks**: Arbitrage-focused 550+ line guide
+- **Sandwich Attacks**: Most harmful MEV type, 700+ line guide
+- **Transaction Displacement**: Competition scenarios, 600+ line guide
+- **Preventing Sandwich Attacks**: Complete protection guide, 800+ lines
+- **Total MEV Content**: ~3,300 lines of new documentation
 
 ---
 
