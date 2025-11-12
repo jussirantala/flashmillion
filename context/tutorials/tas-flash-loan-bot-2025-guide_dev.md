@@ -1,4 +1,6 @@
 **Source:** https://tas.co.in/how-to-build-a-flash-loan-arbitrage-bot-from-code-to-deployment-2025-guide/
+**Date:** 2024-2025
+
 
 # Flash Loan Bot 2025 Technical Implementation Guide - Level 2
 **Technical Level:** Advanced

@@ -1,4 +1,6 @@
 **Source:** https://www.solulab.com/how-to-build-crypto-arbitrage-flash-loan-bot/
+**Date:** 2024-2025
+
 
 # Guide to Building a Crypto Flash Loan Bot - Solulab
 

@@ -1,4 +1,6 @@
 **Source:** https://scand.com/company/blog/how-to-build-crypto-arbitrage-flash-loan-bot/
+**Date:** 2024-2025
+
 
 # Crypto Flash Loan Arbitrage Bot - Scand
 

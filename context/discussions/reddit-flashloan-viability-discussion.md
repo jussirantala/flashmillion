@@ -1,4 +1,6 @@
 **Source:** https://www.reddit.com/r/defi/comments/1iuu9um/are_flashloan_arbitrage_bots_viable/
+**Date:** January 2024
+
 
 # Reddit Discussion: Are Flashloan Arbitrage Bots Viable?
 

@@ -1,4 +1,6 @@
 **Source:** https://www.techopedia.com/flash-loan-arbitrage-explained
+**Date:** 2024
+
 
 # Flash Loan Technical Deep Dive - Level 2
 **Technical Level:** Advanced

@@ -1,4 +1,6 @@
 **Source:** https://github.com/Whillyyyy/Flashloan-Arbitrage-Bot
+**Date:** 2024-2025
+
 
 # Flashloan-Arbitrage-Bot - Technical Implementation
 

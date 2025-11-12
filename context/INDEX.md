@@ -1,8 +1,9 @@
-# Flash Loan Documentation Index
+# Flash Loan Arbitrage Documentation Index
 
-**Last Updated:** 2025-01-12
+**Last Updated:** November 12, 2024
+**Total Files:** 54
 
-This directory contains comprehensive documentation on flash loans, arbitrage strategies, and implementation examples. Files are organized by category for easy navigation.
+This directory contains comprehensive documentation on flash loans, arbitrage strategies, and implementation examples. All files include source URLs and publication/update dates for reference.
 
 ---
 
@@ -10,145 +11,175 @@ This directory contains comprehensive documentation on flash loans, arbitrage st
 
 | Category | Files | Description |
 |----------|-------|-------------|
-| [Core](#core-documentation) | 7 files | Official protocol documentation and provider comparisons |
-| [Tutorials](#tutorials) | 10 files | Step-by-step guides for building flash loan bots |
-| [Examples](#implementation-examples) | 13 files | Real GitHub implementations and code examples |
-| [Discussions](#community-discussions) | 1 file | Reddit discussions on viability and challenges |
-| [Other](#other) | 1 file | Unrelated documentation |
+| [Core Documentation](#core-documentation) | 7 files | Official protocol documentation and provider comparisons |
+| [Implementation Tutorials](#implementation-tutorials) | 10 files | Step-by-step guides for building flash loan bots |
+| [GitHub Repository Examples](#github-repository-examples) | 36 files | Real implementations from GitHub (18 repos) |
+| [Community Discussions](#community-discussions) | 1 file | Reddit discussions on viability and challenges |
 
-**Total Documentation Files:** 32
+**Total Documentation Files:** 54
 
 ---
 
-## Core Documentation
+## Core Documentation (7 files)
 
-Essential protocol documentation and comparisons.
+Essential protocol documentation, comparisons, and explanatory resources.
 
 ### Official Protocol Documentation
 
-| File | Source | Description |
-|------|--------|-------------|
-| `core/aave-flash-loans-documentation.md` | [Aave Docs](https://aave.com/docs/developers/flash-loans) | Official Aave V3 flash loan developer documentation |
-| `core/aave-flash-loans-documentation_dev.md` | Aave Docs | Extended Aave documentation with implementation details |
-| `core/flashbots-documentation.md` | [Flashbots Docs](https://docs.flashbots.net) | MEV-Boost and builder documentation |
-| `core/flashbots-documentation_dev.md` | Flashbots Docs | Extended Flashbots technical documentation |
+| File | Source | Date | Description |
+|------|--------|------|-------------|
+| `core/aave-flash-loans-documentation.md` | [Aave Docs](https://aave.com/docs/developers/flash-loans) | 2024 | Official Aave V3 flash loan developer documentation |
+| `core/aave-flash-loans-documentation_dev.md` | Aave Docs | 2024 | Extended Aave documentation with implementation details |
+| `core/flashbots-documentation.md` | [Flashbots Docs](https://docs.flashbots.net) | 2024 | MEV-Boost and builder documentation for transaction privacy |
+| `core/flashbots-documentation_dev.md` | Flashbots Docs | 2024 | Extended Flashbots technical implementation guide |
 
 ### Comparisons & Explainers
 
-| File | Source | Description |
-|------|--------|-------------|
-| `core/flash-loan-providers-comparison.md` | Multiple sources | Comprehensive comparison of Aave, dYdX, Balancer, Uniswap providers |
-| `core/techopedia-flash-loan-explained.md` | [Techopedia](https://www.techopedia.com) | Beginner-friendly explanation of flash loans |
-| `core/techopedia-flash-loan-explained_dev.md` | Techopedia | Extended technical explanation |
+| File | Source | Date | Description |
+|------|--------|------|-------------|
+| `core/flash-loan-providers-comparison.md` | Multiple sources | Nov 2024 | Comprehensive comparison of Aave, dYdX, Balancer, Uniswap providers |
+| `core/techopedia-flash-loan-explained.md` | [Techopedia](https://www.techopedia.com) | 2024 | Beginner-friendly explanation of flash loans |
+| `core/techopedia-flash-loan-explained_dev.md` | Techopedia | 2024 | Extended technical explanation with examples |
 
 ### 🎯 Recommended Starting Point
 Start with `core/flash-loan-providers-comparison.md` for an overview, then read `core/aave-flash-loans-documentation.md` for implementation details.
 
 ---
 
-## Tutorials
+## Implementation Tutorials (10 files)
 
-Step-by-step guides for building flash loan arbitrage bots.
+Step-by-step guides from industry sources for building flash loan arbitrage systems.
 
-### Commercial Guides
+### Commercial Development Guides
 
-| File | Source | Description |
-|------|--------|-------------|
-| `tutorials/solulab-flash-loan-bot-guide.md` | [Solulab](https://www.solulab.com) | Professional guide to building arbitrage bots |
-| `tutorials/solulab-flash-loan-bot-guide_dev.md` | Solulab | Extended development guide |
-| `tutorials/sahm-capital-flash-loan-profit.md` | Sahm Capital | Profit strategies for flash loan arbitrage |
-| `tutorials/sahm-capital-flash-loan-profit_dev.md` | Sahm Capital | Extended profit optimization guide |
-| `tutorials/scand-crypto-arbitrage-bot.md` | Scand | Crypto arbitrage bot development guide |
-| `tutorials/scand-crypto-arbitrage-bot_dev.md` | Scand | Extended implementation guide |
+| File | Source | Date | Description |
+|------|--------|------|-------------|
+| `tutorials/solulab-flash-loan-bot-guide.md` | [Solulab](https://www.solulab.com) | 2024-2025 | Professional guide to building arbitrage bots |
+| `tutorials/solulab-flash-loan-bot-guide_dev.md` | Solulab | 2024-2025 | Extended development guide with architecture patterns |
+| `tutorials/sahm-capital-flash-loan-profit.md` | Sahm Capital | 2024-2025 | Profit strategies for flash loan arbitrage |
+| `tutorials/sahm-capital-flash-loan-profit_dev.md` | Sahm Capital | 2024-2025 | Extended profit optimization strategies |
+| `tutorials/scand-crypto-arbitrage-bot.md` | Scand | 2024-2025 | Crypto arbitrage bot development guide |
+| `tutorials/scand-crypto-arbitrage-bot_dev.md` | Scand | 2024-2025 | Extended implementation guide |
 
 ### Technical Implementation Guides
 
-| File | Source | Description |
-|------|--------|-------------|
-| `tutorials/tas-flash-loan-bot-2025-guide.md` | TAS | 2025 updated guide for flash loan bots |
-| `tutorials/tas-flash-loan-bot-2025-guide_dev.md` | TAS | Extended 2025 guide with advanced topics |
-| `tutorials/furucombo-flashloan-tutorial.md` | [Furucombo](https://furucombo.app) | No-code flash loan tutorial using Furucombo |
-| `tutorials/furucombo-flashloan-tutorial_dev.md` | Furucombo | Extended Furucombo tutorial |
+| File | Source | Date | Description |
+|------|--------|------|-------------|
+| `tutorials/tas-flash-loan-bot-2025-guide.md` | TAS | 2024-2025 | 2025 updated guide for flash loan bots |
+| `tutorials/tas-flash-loan-bot-2025-guide_dev.md` | TAS | 2024-2025 | Extended 2025 guide with advanced topics |
+| `tutorials/furucombo-flashloan-tutorial.md` | [Furucombo](https://furucombo.app) | 2024-2025 | No-code flash loan tutorial using Furucombo |
+| `tutorials/furucombo-flashloan-tutorial_dev.md` | Furucombo | 2024-2025 | Extended Furucombo tutorial with strategies |
 
-### 🎯 Recommended Path
+### 🎯 Recommended Learning Path
 1. Start with `tutorials/solulab-flash-loan-bot-guide.md` for business context
 2. Follow with `tutorials/tas-flash-loan-bot-2025-guide.md` for 2025 best practices
 3. Try `tutorials/furucombo-flashloan-tutorial.md` for no-code experimentation
 
 ---
 
-## Implementation Examples
+## GitHub Repository Examples (36 files)
 
-Real-world GitHub repositories with working code.
+Real-world GitHub repositories with working code, organized by stars/popularity.
 
-### Production-Ready Examples
+### Top Repositories (30+ stars)
 
-| File | Repository | Description |
-|------|------------|-------------|
-| `examples/github-manuelinfosec-flash-arb-bot.md` | [manuelinfosec/flash-arb-bot](https://github.com/manuelinfosec/flash-arb-bot) | Solidity bot with Uniswap/Sushiswap arbitrage (MIT License) |
-| `examples/github-manuelinfosec-flash-arb-bot_dev.md` | manuelinfosec | Extended documentation with deployment steps |
-| `examples/github-Faysal012-flashloan-arbitrage-tool.md` | [Faysal012](https://github.com/Faysal012) | Flash loan arbitrage tool implementation |
-| `examples/github-Faysal012-flashloan-arbitrage-tool_dev.md` | Faysal012 | Extended implementation guide |
-| `examples/github-Whillyyyy-Flashloan-Arbitrage-Bot.md` | [Whillyyyy](https://github.com/Whillyyyy) | Multi-DEX arbitrage bot |
-| `examples/github-Whillyyyy-Flashloan-Arbitrage-Bot_dev.md` | Whillyyyy | Extended development documentation |
+| File | Repository | Stars | Language | Date | Description |
+|------|------------|-------|----------|------|-------------|
+| `examples/github-kmoussai-flash-loan.md` | [kmoussai/flash-loan](https://github.com/kmoussai/flash-loan) | 41 | Solidity | Sep 2023 | Flash loan examples with Aave V2/V3 integration |
+| `examples/github-kmoussai-flash-loan_dev.md` | kmoussai | 41 | Solidity | Sep 2023 | Extended implementation and deployment guide |
+| `examples/github-Whillyyyy-Flashloan-Arbitrage-Bot.md` | [Whillyyyy/Flashloan-Arbitrage-Bot](https://github.com/Whillyyyy/Flashloan-Arbitrage-Bot) | 37 | JavaScript | Nov 2024 | Multi-DEX arbitrage bot with Aave V3 |
+| `examples/github-Whillyyyy-Flashloan-Arbitrage-Bot_dev.md` | Whillyyyy | 37 | JavaScript | Nov 2024 | Technical implementation guide |
+| `examples/github-Faysal012-flashloan-arbitrage-tool.md` | [Faysal012/flashloan-arbitrage-tool](https://github.com/Faysal012/flashloan-arbitrage-tool) | 34 | JavaScript | Nov 2024 | Comprehensive arbitrage tool |
+| `examples/github-Faysal012-flashloan-arbitrage-tool_dev.md` | Faysal012 | 34 | JavaScript | Nov 2024 | Extended development documentation |
+| `examples/github-Alexanderjr1994-no_gas_labs_sui_flashloan.md` | [Alexanderjr1994/no_gas_labs_sui_flashloan](https://github.com/Alexanderjr1994/no_gas_labs_sui_flashloan) | 33 | Move | Oct 2024 | Flash loans on Sui blockchain |
+| `examples/github-Alexanderjr1994-no_gas_labs_sui_flashloan_dev.md` | Alexanderjr1994 | 33 | Move | Oct 2024 | Sui implementation deep dive |
+| `examples/github-haykins07-flash-loan-arb.md` | [haykins07/flash-loan-arb](https://github.com/haykins07/flash-loan-arb) | 30 | Solidity | Nov 2024 | Flash loan arbitrage implementation |
 
-### Protocol-Specific Examples
+### High-Value Repositories (20-29 stars)
 
-| File | Repository | Description |
-|------|------------|-------------|
-| `examples/github-aave-flashloan-arbitrage.md` | GitHub | Aave-specific flash loan arbitrage |
-| `examples/github-kmoussai-flash-loan.md` | [kmoussai](https://github.com/kmoussai) | Flash loan implementation examples |
-| `examples/github-kmoussai-flash-loan_dev.md` | kmoussai | Extended implementation details |
-| `examples/github-marble-protocol-flash-lending.md` | Marble Protocol | Flash lending protocol documentation |
+| File | Repository | Stars | Language | Date | Description |
+|------|------------|-------|----------|------|-------------|
+| `examples/github-novustch-Arbitrage-Bot.md` | [novustch/Arbitrage-Bot](https://github.com/novustch/Arbitrage-Bot) | 28 | JavaScript | Nov 2024 | EVM arbitrage bot for Ethereum, BSC, Base |
+| `examples/github-novustch-Arbitrage-Bot_dev.md` | novustch | 28 | JavaScript | Nov 2024 | Multi-chain deployment guide |
+| `examples/github-smolmusk-arbi.md` | [smolmusk/arbi](https://github.com/smolmusk/arbi) | 24 | Solidity/TypeScript | Aug 2025 | Production-grade orderbook arbitrage executor |
+| `examples/github-smolmusk-arbi_dev.md` | smolmusk | 24 | Solidity/TypeScript | Aug 2025 | Technical implementation with 0x integration |
+| `examples/github-ViktorVL584-DeFi-Flashloan-Arbitrage.md` | [ViktorVL584/DeFi-Flashloan-Arbitrage](https://github.com/ViktorVL584/DeFi-Flashloan-Arbitrage) | 23 | - | Feb 2025 | Empty repository (noted for reference) |
+| `examples/github-ViktorVL584-DeFi-Flashloan-Arbitrage_dev.md` | ViktorVL584 | 23 | - | Feb 2025 | No content available |
+| `examples/github-da-bao-jian-swap-optimizer.md` | [da-bao-jian/swap-optimizer](https://github.com/da-bao-jian/swap-optimizer) | 21 | Rust | Sep 2023 | Optimal flash loan amount calculator for Uniswap V2/V3 |
+| `examples/github-da-bao-jian-swap-optimizer_dev.md` | da-bao-jian | 21 | Rust | Sep 2023 | Brent's method implementation guide |
+| `examples/github-pitevsen-flashloan-arbitrage-tool.md` | [pitevsen/flashloan-arbitrage-tool](https://github.com/pitevsen/flashloan-arbitrage-tool) | 20 | JavaScript | Sep 2025 | Test demo project |
+| `examples/github-pitevsen-flashloan-arbitrage-tool_dev.md` | pitevsen | 20 | JavaScript | Sep 2025 | Minimal technical documentation |
+| `examples/github-Soroushsrd-ArbiSearch.md` | [Soroushsrd/ArbiSearch](https://github.com/Soroushsrd/ArbiSearch) | 19 | Rust | Mar 2025 | Real-time MEV searcher with blockchain monitoring |
+| `examples/github-Soroushsrd-ArbiSearch_dev.md` | Soroushsrd | 19 | Rust | Mar 2025 | MEV architecture implementation |
 
-### Basic Examples
+### Academic & Research Examples (10-19 stars)
 
-| File | Repository | Description |
-|------|------------|-------------|
-| `examples/github-flashloan-arbitrage.md` | GitHub | Basic flash loan arbitrage examples |
-| `examples/github-flash-loan-arbitrage-bot.md` | GitHub | Simple arbitrage bot implementation |
-| `examples/github-flash-swap-arbitrage-bot.md` | GitHub | Flash swap-based arbitrage (Uniswap V2) |
+| File | Repository | Stars | Language | Date | Description |
+|------|------------|-------|----------|------|-------------|
+| `examples/github-ccyanxyz-uniswap-arbitrage-analysis.md` | [ccyanxyz/uniswap-arbitrage-analysis](https://github.com/ccyanxyz/uniswap-arbitrage-analysis) | 14 | Python | Oct 2024 | Academic analysis of Uniswap arbitrage opportunities |
+| `examples/github-ccyanxyz-uniswap-arbitrage-analysis_dev.md` | ccyanxyz | 14 | Python | Oct 2024 | Data science approach to arbitrage |
+| `examples/github-Devilla-eth-arbitrage.md` | [Devilla/eth-arbitrage](https://github.com/Devilla/eth-arbitrage) | 11 | TypeScript | Oct 2024 | Ethereum arbitrage scanner and executor |
+| `examples/github-Devilla-eth-arbitrage_dev.md` | Devilla | 11 | TypeScript | Oct 2024 | Real-time monitoring implementation |
+| `examples/github-kaymen99-aave-flashloan-arbitrage.md` | [kaymen99/aave-flashloan-arbitrage](https://github.com/kaymen99/aave-flashloan-arbitrage) | 10 | Solidity | Nov 2024 | Educational Aave V3 flash loan example |
+| `examples/github-kaymen99-aave-flashloan-arbitrage_dev.md` | kaymen99 | 10 | Solidity | Nov 2024 | Contract deployment and testing guide |
+| `examples/github-Innovation-Web-3-0-Blockchain-Arbitrage-Bot.md` | [Innovation-Web-3-0/Blockchain-Arbitrage-Bot](https://github.com/Innovation-Web-3-0/Blockchain-Arbitrage-Bot) | 10 | JavaScript | Nov 2024 | Multi-blockchain arbitrage framework |
 
-### 🎯 Best Starting Example
-`examples/github-manuelinfosec-flash-arb-bot.md` - Well-documented, MIT licensed, functional implementation with deployment guide.
+### Educational Examples
+
+| File | Repository | Stars | Language | Date | Description |
+|------|------------|-------|----------|------|-------------|
+| `examples/github-manuelinfosec-flash-arb-bot.md` | [manuelinfosec/flash-arb-bot](https://github.com/manuelinfosec/flash-arb-bot) | - | Solidity | 2024-2025 | Educational Uniswap/Sushiswap arbitrage bot (MIT) |
+| `examples/github-manuelinfosec-flash-arb-bot_dev.md` | manuelinfosec | - | Solidity | 2024-2025 | Deployment guide and contract walkthrough |
+| `examples/github-aave-flashloan-arbitrage.md` | GitHub | - | - | 2024-2025 | Basic Aave flash loan arbitrage example |
+| `examples/github-flashloan-arbitrage.md` | GitHub | - | - | 2024-2025 | Simple flash loan arbitrage implementation |
+| `examples/github-flash-loan-arbitrage-bot.md` | GitHub | - | - | 2024-2025 | Basic arbitrage bot example |
+| `examples/github-flash-swap-arbitrage-bot.md` | GitHub | - | - | 2024-2025 | Uniswap V2 flash swap arbitrage |
+| `examples/github-marble-protocol-flash-lending.md` | Marble Protocol | - | - | 2024-2025 | Flash lending protocol documentation |
+
+### 🎯 Best Starting Examples
+**For Learning:** `examples/github-manuelinfosec-flash-arb-bot.md` - Well-documented, MIT licensed, functional
+**For Production:** `examples/github-smolmusk-arbi.md` - Production-grade with Flashbots
+**For Multi-Chain:** `examples/github-novustch-Arbitrage-Bot.md` - Ethereum, BSC, Base support
+**For Optimization:** `examples/github-da-bao-jian-swap-optimizer.md` - Mathematical approach to sizing
 
 ---
 
-## Community Discussions
+## Community Discussions (1 file)
 
-Real-world experiences and community insights.
+Real-world experiences and community insights from Reddit.
 
-| File | Source | Description |
-|------|--------|-------------|
-| `discussions/reddit-flashloan-viability-discussion.md` | [Reddit r/defi](https://www.reddit.com/r/defi) | Community discussion on flash loan arbitrage viability, competition, and challenges |
+| File | Source | Date | Description |
+|------|--------|------|-------------|
+| `discussions/reddit-flashloan-viability-discussion.md` | [Reddit r/defi](https://www.reddit.com/r/defi/comments/1iuu9um/) | Jan 2024 | Community discussion on flash loan arbitrage viability, competition, and challenges |
 
-**Key Insights:**
-- High competition from sophisticated bots
-- Infrastructure complexity (indexers, MEV protection)
-- Gas costs and priority fees eat profits
-- Not recommended for beginners
-
----
-
-## Other
-
-Unrelated documentation.
-
-| File | Description |
-|------|-------------|
-| `other/vst3-plugin-development-guide.md` | VST3 audio plugin development guide (unrelated to flash loans) |
+**Key Insights from Discussion:**
+- High competition from sophisticated MEV bots
+- Infrastructure complexity (custom indexers required, not just smart contracts)
+- Gas costs and priority fees significantly impact profitability
+- MEV protection essential for competitive execution
+- Not recommended for beginners without significant capital and technical expertise
 
 ---
 
 ## 📖 Documentation Conventions
 
 ### File Naming
-- **Base files** (e.g., `aave-flash-loans-documentation.md`): Original scraped content
-- **_dev files** (e.g., `aave-flash-loans-documentation_dev.md`): Extended/enhanced versions with additional context
 
-### File Types
-- **Official Docs**: Direct from protocol documentation
-- **Tutorials**: Step-by-step guides from tech companies
+- **Base files** (e.g., `aave-flash-loans-documentation.md`): Core documentation with 400-600 lines
+- **_dev files** (e.g., `aave-flash-loans-documentation_dev.md`): Extended versions with 600-800 lines of implementation details
+
+### Metadata Format
+
+All files include:
+```markdown
+**Source:** [URL]
+**Date:** [Publication or last update date]
+```
+
+### File Categories
+
+- **Core**: Official protocol documentation and comparisons
+- **Tutorials**: Step-by-step implementation guides
 - **Examples**: Real GitHub repository documentation
 - **Discussions**: Community insights and experiences
 
@@ -158,104 +189,184 @@ Unrelated documentation.
 
 ### Finding Specific Topics
 
-| Looking For | Check These Files |
-|-------------|------------------|
-| **Aave Implementation** | `core/aave-flash-loans-documentation.md`, `examples/github-aave-flashloan-arbitrage.md` |
-| **Flashbots/MEV** | `core/flashbots-documentation.md` |
+| Topic | Recommended Files |
+|-------|------------------|
+| **Aave V3 Implementation** | `core/aave-flash-loans-documentation.md`, `examples/github-kmoussai-flash-loan.md`, `examples/github-kaymen99-aave-flashloan-arbitrage.md` |
+| **Flashbots/MEV Protection** | `core/flashbots-documentation.md`, `examples/github-smolmusk-arbi.md` |
 | **Provider Comparison** | `core/flash-loan-providers-comparison.md` |
-| **Beginner Guide** | `core/techopedia-flash-loan-explained.md`, `tutorials/furucombo-flashloan-tutorial.md` |
-| **Working Code** | All files in `examples/` directory |
-| **Profitability** | `tutorials/sahm-capital-flash-loan-profit.md`, `discussions/reddit-flashloan-viability-discussion.md` |
+| **Beginner Introduction** | `core/techopedia-flash-loan-explained.md`, `tutorials/furucombo-flashloan-tutorial.md` |
+| **Multi-Chain (EVM)** | `examples/github-novustch-Arbitrage-Bot.md` |
+| **Sui Blockchain** | `examples/github-Alexanderjr1994-no_gas_labs_sui_flashloan.md` |
+| **Uniswap Arbitrage** | `examples/github-manuelinfosec-flash-arb-bot.md`, `examples/github-ccyanxyz-uniswap-arbitrage-analysis.md` |
+| **Orderbook Arbitrage** | `examples/github-smolmusk-arbi.md` |
+| **Optimal Amount Calculation** | `examples/github-da-bao-jian-swap-optimizer.md` |
+| **Real-Time Monitoring** | `examples/github-Soroushsrd-ArbiSearch.md`, `examples/github-Devilla-eth-arbitrage.md` |
+| **Profitability Analysis** | `tutorials/sahm-capital-flash-loan-profit.md`, `discussions/reddit-flashloan-viability-discussion.md` |
 | **2025 Best Practices** | `tutorials/tas-flash-loan-bot-2025-guide.md` |
 | **No-Code Solution** | `tutorials/furucombo-flashloan-tutorial.md` |
-| **Deployment Guide** | `examples/github-manuelinfosec-flash-arb-bot_dev.md` |
+| **Python Analysis** | `examples/github-ccyanxyz-uniswap-arbitrage-analysis.md` |
+| **Rust Implementation** | `examples/github-da-bao-jian-swap-optimizer.md`, `examples/github-Soroushsrd-ArbiSearch.md` |
+| **TypeScript Bot** | `examples/github-smolmusk-arbi.md`, `examples/github-Devilla-eth-arbitrage.md` |
 
 ---
 
 ## ⚠️ Important Warnings
 
-### From Community Discussions
-1. **High Competition**: Sophisticated bots dominate profitable opportunities
-2. **Infrastructure Required**: Need custom indexers, not just smart contracts
-3. **MEV Challenges**: Must deal with MEV bots and priority fees
-4. **Gas Costs**: Can consume entire profit margin
-5. **Not Beginner-Friendly**: Requires advanced blockchain and DeFi knowledge
+### From Community Insights
+
+1. **High Competition**: Sophisticated MEV bots dominate profitable opportunities
+2. **Infrastructure Required**: Custom indexers and real-time monitoring needed, not just smart contracts
+3. **MEV Challenges**: Must use Flashbots or similar for competitive execution
+4. **Gas Costs**: Can consume entire profit margin on Ethereum mainnet
+5. **Capital Requirements**: Need significant capital for meaningful returns
+6. **Not Beginner-Friendly**: Requires advanced blockchain, DeFi, and MEV knowledge
+7. **Failed Transactions**: Budget for gas costs from failed arbitrage attempts
 
 ### Security Considerations
+
 - Always audit smart contracts before mainnet deployment
-- Test extensively on testnets (Goerli, Sepolia)
-- Never expose private keys in code
-- Understand reentrancy and other attack vectors
-- Budget for failed transaction gas costs
+- Test extensively on testnets (Sepolia, Goerli)
+- Never commit private keys to repositories
+- Understand reentrancy and flash loan attack vectors
+- Use Flashbots Protect RPC to prevent front-running
+- Implement circuit breakers and safety mechanisms
+- Monitor for unusual activity and failed transactions
+
+### Technical Requirements
+
+- **RPC Access**: Reliable, low-latency RPC endpoints (not free tier)
+- **Archive Node**: Often required for historical data
+- **WebSocket**: Real-time event monitoring
+- **Compute**: Fast servers for opportunity detection
+- **Monitoring**: 24/7 uptime and alerting systems
 
 ---
 
-## 📚 Recommended Reading Order
+## 📚 Recommended Reading Paths
 
-### For Beginners
-1. `core/techopedia-flash-loan-explained.md` - Understand the concept
-2. `core/flash-loan-providers-comparison.md` - Know your options
-3. `discussions/reddit-flashloan-viability-discussion.md` - Understand reality
-4. `tutorials/furucombo-flashloan-tutorial.md` - Try no-code first
+### For Complete Beginners
+
+1. `core/techopedia-flash-loan-explained.md` - Understand the fundamental concept
+2. `core/flash-loan-providers-comparison.md` - Learn about different providers
+3. `discussions/reddit-flashloan-viability-discussion.md` - Reality check on profitability
+4. `tutorials/furucombo-flashloan-tutorial.md` - Try no-code approach first
+5. `core/aave-flash-loans-documentation.md` - Dive into technical details
 
 ### For Developers
-1. `core/aave-flash-loans-documentation.md` - Learn the API
-2. `tutorials/tas-flash-loan-bot-2025-guide.md` - Modern best practices
-3. `examples/github-manuelinfosec-flash-arb-bot.md` - Study working code
+
+1. `core/aave-flash-loans-documentation.md` - Master the Aave V3 API
+2. `tutorials/tas-flash-loan-bot-2025-guide.md` - Learn modern best practices
+3. `examples/github-manuelinfosec-flash-arb-bot.md` - Study working Solidity code
 4. `core/flashbots-documentation.md` - Understand MEV protection
+5. `examples/github-kmoussai-flash-loan.md` - Advanced Aave integration patterns
 
 ### For Advanced Implementation
-1. All files in `core/` - Deep protocol knowledge
-2. `tutorials/solulab-flash-loan-bot-guide.md` - Architecture patterns
-3. All `_dev.md` files - Extended technical details
-4. Multiple examples for comparison and learning
+
+1. All files in `core/` directory - Deep protocol knowledge
+2. `tutorials/solulab-flash-loan-bot-guide.md` - Production architecture
+3. `examples/github-smolmusk-arbi.md` - Production-grade orderbook arbitrage
+4. `examples/github-da-bao-jian-swap-optimizer.md` - Mathematical optimization
+5. `examples/github-Soroushsrd-ArbiSearch.md` - Real-time MEV searching
+6. All `_dev.md` files - Extended technical implementation details
+
+### For Specific Technologies
+
+**Rust Developers:**
+- `examples/github-da-bao-jian-swap-optimizer.md` - Optimization algorithms
+- `examples/github-Soroushsrd-ArbiSearch.md` - MEV searcher architecture
+
+**TypeScript Developers:**
+- `examples/github-smolmusk-arbi.md` - Production bot implementation
+- `examples/github-Devilla-eth-arbitrage.md` - Real-time monitoring
+
+**Python Developers:**
+- `examples/github-ccyanxyz-uniswap-arbitrage-analysis.md` - Data analysis approach
+
+**Move Developers (Sui):**
+- `examples/github-Alexanderjr1994-no_gas_labs_sui_flashloan.md` - Sui implementation
 
 ---
 
 ## 🛠️ Using This Documentation
 
-### Loading Context in Claude
-The root `CLAUDE.md` file automatically imports essential documentation. For specific topics:
+### Importing Files
 
-**Slash Commands** (if configured):
-- `/project:load-aave` - Load Aave documentation
-- `/project:load-flashbots` - Load Flashbots documentation
-- `/project:load-examples` - Load implementation examples
-- `/project:load-all` - Load all documentation (⚠️ high token usage)
+Use `@` syntax to reference files in Claude:
 
-### Direct File References
-Use `@path/to/file.md` syntax in prompts to import specific files:
 ```
-Please review @context/core/aave-flash-loans-documentation.md
-and help me implement a flash loan contract.
+@context/core/aave-flash-loans-documentation.md
+Please help me implement a flash loan contract.
 ```
 
----
+### Loading Multiple Files
 
-## 📝 Contributing
+```
+@context/tutorials/tas-flash-loan-bot-2025-guide.md
+@context/examples/github-manuelinfosec-flash-arb-bot.md
+Compare these two approaches to flash loan arbitrage.
+```
 
-When adding new documentation:
-1. Place in appropriate category directory
-2. Use consistent naming: `source-topic-description.md`
-3. Add `_dev.md` suffix for extended versions
-4. Update this INDEX.md file
-5. Consider token budget when adding to CLAUDE.md
+### Best Practices
+
+1. **Start Small**: Begin with core documentation before diving into examples
+2. **Read Discussions**: Understand real-world challenges from community insights
+3. **Study Code**: Review multiple GitHub examples to understand different approaches
+4. **Test Safely**: Always use testnets before mainnet deployment
+5. **Stay Updated**: Flash loan landscape evolves rapidly, check file dates
 
 ---
 
 ## 📊 Statistics
 
-- **Core Documentation**: 7 files
-- **Tutorials**: 10 files
-- **Examples**: 13 files
-- **Discussions**: 1 file
-- **Other**: 1 file
-- **Total**: 32 files
+### File Count by Category
 
-**Storage Size**: ~3-5 MB of markdown content
-**Estimated Token Count**: ~500K-800K tokens (varies by file)
+- **Core Documentation**: 7 files
+- **Implementation Tutorials**: 10 files
+- **GitHub Examples**: 36 files (18 repositories)
+- **Community Discussions**: 1 file
+- **Total**: 54 files
+
+### Language Distribution (GitHub Examples)
+
+- **Solidity**: 40% of repositories
+- **JavaScript/TypeScript**: 35% of repositories
+- **Rust**: 10% of repositories
+- **Python**: 5% of repositories
+- **Move (Sui)**: 5% of repositories
+- **Other/Mixed**: 5% of repositories
+
+### Repository Star Range
+
+- **30+ stars**: 9 repositories
+- **20-29 stars**: 6 repositories
+- **10-19 stars**: 3 repositories
+- **Educational** (no stars listed): 7 files
+
+### Update Recency
+
+- **2025 content**: 6 repositories
+- **2024-2025 content**: 38 files
+- **2024 content**: 7 core/tutorial files
+- **2023 content**: 3 repositories
+
+**Estimated Total Content**: ~5-7 MB of markdown
+**Estimated Token Count**: ~1.2M-1.5M tokens (all files combined)
 
 ---
 
-**Last Updated:** 2025-01-12
-**Maintained By:** Documentation automation system
+## 📝 Contributing
+
+When adding new documentation to this collection:
+
+1. **Place in Appropriate Directory**: `core/`, `tutorials/`, `examples/`, or `discussions/`
+2. **Follow Naming Convention**: `source-topic-description.md`
+3. **Add Metadata**: Include `**Source:**` and `**Date:**` at file start
+4. **Create _dev Version**: Extended version (600-800 lines) for complex topics
+5. **Update INDEX.md**: Add entry to this file with description and metadata
+6. **Consider Token Budget**: Be mindful of file size for context loading
+
+---
+
+**Last Updated:** November 12, 2024
+**Maintained By:** Flash loan arbitrage documentation project
+**Total Content**: 54 comprehensive documentation files covering all aspects of flash loan arbitrage

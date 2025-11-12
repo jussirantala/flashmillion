@@ -1,4 +1,6 @@
 **Source:** https://www.solulab.com/how-to-build-crypto-arbitrage-flash-loan-bot/
+**Date:** 2024-2025
+
 
 # Flash Loan Bot Technical Implementation - Level 2
 **Technical Level:** Advanced

@@ -1,4 +1,6 @@
 **Source:** https://tas.co.in/how-to-build-a-flash-loan-arbitrage-bot-from-code-to-deployment-2025-guide/
+**Date:** 2024-2025
+
 
 # Flash Loan Arbitrage Bot: 2025 Development Guide - TAS
 
