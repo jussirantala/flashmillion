@@ -8,7 +8,7 @@
 [![Implementation Guides](https://img.shields.io/badge/guides-5_implementations-green.svg)](context/INDEX.md#mev-implementation-guides)
 [![Last Updated](https://img.shields.io/badge/updated-November_2025-orange.svg)](context/INDEX.md)
 
-[Documentation Index](context/INDEX.md) • [Implementation Guides](context/tutorials/) • [Architecture Diagrams](ARCHITECTURE.md) • [Contribute](#contributing)
+[Documentation Index](context/INDEX.md) • [Implementation Guides](context/tutorials/) • [Architecture Diagrams](context/tutorials/ARCHITECTURE.md) • [Contribute](#contributing)
 
 </div>
 
@@ -89,7 +89,7 @@ This repository is a **curated knowledge base** designed to provide Claude (Anth
 | **Learn about MEV attacks** | [`context/tutorials/understanding-sandwich-attacks.md`](context/tutorials/understanding-sandwich-attacks.md) |
 | **Protect against MEV** | [`context/tutorials/preventing-front-running-attacks.md`](context/tutorials/preventing-front-running-attacks.md) |
 | **Build a bot** | [`context/tutorials/low-budget-sandwich-bot-roadmap.md`](context/tutorials/low-budget-sandwich-bot-roadmap.md) |
-| **See architecture** | [`ARCHITECTURE.md`](ARCHITECTURE.md) |
+| **See architecture** | [`context/tutorials/ARCHITECTURE.md`](context/tutorials/ARCHITECTURE.md) |
 | **Browse everything** | [`context/INDEX.md`](context/INDEX.md) |
 
 ---
@@ -99,7 +99,6 @@ This repository is a **curated knowledge base** designed to provide Claude (Anth
 ```
 flashmillion/
 ├── README.md                          # This file - start here
-├── ARCHITECTURE.md                    # Visual system diagrams (Mermaid)
 ├── CLAUDE.md                         # Project instructions for Claude
 │
 ├── context/                          # Main documentation library
@@ -112,6 +111,7 @@ flashmillion/
 │   │   └── ...
 │   │
 │   ├── tutorials/                    # Guides & tutorials (21 files)
+│   │   ├── ARCHITECTURE.md           # Visual system diagrams (Mermaid)
 │   │   ├── understanding-sandwich-attacks.md (1500+ lines!)
 │   │   ├── preventing-front-running-attacks.md (850+ lines!)
 │   │   ├── optimizing-gas-fees.md
@@ -509,7 +509,7 @@ Special thanks to:
 
 **Flash Million** - Comprehensive Flash Loan & MEV Knowledge Base
 
-[Documentation](context/INDEX.md) • [Implementation Guides](context/tutorials/) • [Architecture](ARCHITECTURE.md) • [Contribute](#contributing)
+[Documentation](context/INDEX.md) • [Implementation Guides](context/tutorials/) • [Architecture](context/tutorials/ARCHITECTURE.md) • [Contribute](#contributing)
 
 Made with 📚 for in-depth Claude discussions about DeFi, MEV, and flash loans
 
