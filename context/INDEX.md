@@ -1,7 +1,7 @@
 # Flash Loan Arbitrage Documentation Index
 
-**Last Updated:** November 12, 2024
-**Total Files:** 70 markdown files
+**Last Updated:** November 12, 2025
+**Total Files:** 76 markdown files
 
 This directory contains comprehensive documentation on flash loans, arbitrage strategies, MEV attacks, and implementation examples. All files include source URLs and publication/update dates for reference.
 
@@ -13,10 +13,11 @@ This directory contains comprehensive documentation on flash loans, arbitrage st
 |----------|-------|-------------|
 | [Core Documentation](#core-documentation) | 7 files | Official protocol documentation and provider comparisons |
 | [Tutorial Guides](#tutorial-guides) | 21 files | Step-by-step guides, MEV attack documentation, and best practices |
+| [MEV Implementation Guides](#mev-implementation-guides) | 5 files | **NEW!** Complete sandwich bot implementations with full source code |
 | [GitHub Repository Examples](#github-repository-examples) | 41 files | Real implementations from GitHub (includes 4 MEV bot repos with _dev files) |
-| [Community Discussions](#community-discussions) | 1 file | Reddit discussions on viability and challenges |
+| [Community Discussions](#community-discussions) | 2 files | Reddit discussions and strategic analysis on viability and challenges |
 
-**Total Documentation:** 70 files covering all aspects of flash loan arbitrage and MEV
+**Total Documentation:** 76 files covering all aspects of flash loan arbitrage and MEV
 
 ---
 
@@ -99,6 +100,108 @@ Comprehensive guides covering flash loan development, MEV attacks, optimization,
 5. Learn optimization from `tutorials/optimizing-gas-fees.md` and `tutorials/importance-of-speed-in-arbitrage.md`
 6. Understand language tradeoffs in `tutorials/programming-languages-for-flash-loans.md`
 7. Stay current with `tutorials/recent-trends-in-arbitrage-strategies.md`
+
+---
+
+## MEV Implementation Guides (5 files)
+
+**⭐ NEW!** Complete, production-ready sandwich MEV bot implementations with full source code for multiple programming languages and budgets.
+
+### Complete Implementations with Full Code
+
+| File | Language/Stack | Budget | Difficulty | Description |
+|------|----------------|--------|------------|-------------|
+| `tutorials/low-budget-sandwich-bot-roadmap.md` | Multi-language | $1K-5K | All | **START HERE:** Complete roadmap from zero to L2 deployment - phases, budgets, timelines, realistic expectations |
+| `tutorials/sandwich-bot-solidity-implementation.md` | Solidity + TypeScript | $1K-5K | Beginner | Full smart contract + TypeScript bot - Best for learning, L2 focus, ~150K gas |
+| `tutorials/sandwich-bot-typescript-implementation.md` | TypeScript/Node.js | $1K-5K | Beginner | Beginner-friendly full implementation - 50-100ms latency, perfect for L2 |
+| `tutorials/sandwich-bot-rust-implementation.md` | Rust + Tokio | $5K-15K | Advanced | High-performance implementation - 10-20ms latency, based on rusty-sando architecture |
+| `tutorials/sandwich-bot-python-implementation.md` | Python | N/A | Beginner | Learning/analysis only - NOT for production, perfect for understanding mechanics |
+
+### What's Included in Each Guide
+
+**All implementation guides include:**
+- ✅ Complete, working source code
+- ✅ Smart contract code (where applicable)
+- ✅ Mempool monitoring system
+- ✅ Profitability calculator
+- ✅ Salmonella (honeypot) detection
+- ✅ Deployment instructions
+- ✅ Testing strategies
+- ✅ L2 optimization tips
+- ✅ Troubleshooting guide
+
+### Quick Start Decision Tree
+
+**Choose Your Implementation:**
+
+| If You Are... | Use This Guide | Why |
+|---------------|---------------|-----|
+| **Complete beginner** | TypeScript or Solidity+TS | Easiest learning curve, good tooling |
+| **Want fastest results** | TypeScript | Rapid development, 1-2 weeks to deployment |
+| **Budget conscious** | TypeScript or Solidity+TS | Best ROI for $1K-5K budget |
+| **Targeting L2 (Arbitrum/Base)** | TypeScript | 50-100ms latency is competitive enough |
+| **Want to compete on mainnet** | Rust | Need sub-20ms latency, worth the learning curve |
+| **Have Rust experience** | Rust | Best performance, lowest latency |
+| **Just want to learn concepts** | Python | Easiest to understand, perfect for education |
+| **Need production-grade** | Rust | Professional operations use Rust |
+
+### Realistic Outcomes by Implementation
+
+| Implementation | Development Time | Expected Latency | L2 Viable? | Mainnet Viable? | Success Probability |
+|----------------|-----------------|------------------|------------|-----------------|-------------------|
+| **TypeScript** | 1-2 weeks | 50-100ms | ✅ Yes | ⚠️ Marginal | 10-15% |
+| **Solidity+TS** | 2-3 weeks | 50-100ms | ✅ Yes | ⚠️ Marginal | 10-15% |
+| **Rust** | 4-8 weeks | 10-20ms | ✅ Yes | ✅ Competitive | 15-25% |
+| **Python** | 1-2 weeks | 100-200ms | ❌ No | ❌ No | 0% (learning only) |
+
+### Budget & ROI Expectations
+
+**Low Budget ($1K-5K) - TypeScript/Solidity:**
+- Infrastructure: $200-500/month
+- Capital: $500-3,000
+- Expected outcome: Break-even or small loss
+- Learning value: High
+
+**Medium Budget ($5K-15K) - Rust:**
+- Infrastructure: $500-1,500/month
+- Capital: $3,000-10,000
+- Expected outcome: Small profit possible
+- Learning value: Very high
+
+### Implementation Features Comparison
+
+| Feature | TypeScript | Solidity+TS | Rust | Python |
+|---------|-----------|-------------|------|--------|
+| **Mempool Monitoring** | WebSocket | WebSocket | Tokio async | web3.py |
+| **Profit Calculation** | JavaScript | JavaScript | Rust (fast) | Python |
+| **Salmonella Detection** | Basic | Basic | Advanced | Basic |
+| **Smart Contract** | External | Included | External | N/A |
+| **Gas Optimization** | Standard | Optimized | Highly optimized | N/A |
+| **Concurrent Processing** | Limited | Limited | Tokio (excellent) | GIL limited |
+| **Memory Usage** | ~200MB | ~200MB | ~100MB | ~300MB |
+| **Hot Reload** | ✅ Yes | ✅ Yes | ❌ No | ✅ Yes |
+
+### Learning Path Recommendations
+
+**Path 1: Fast Start (Recommended for Beginners)**
+1. Read `low-budget-sandwich-bot-roadmap.md`
+2. Implement `sandwich-bot-typescript-implementation.md`
+3. Deploy to Arbitrum testnet
+4. Test with small capital on Arbitrum mainnet
+5. Optimize based on results
+
+**Path 2: Thorough Understanding**
+1. Start with `sandwich-bot-python-implementation.md` to learn concepts
+2. Read `low-budget-sandwich-bot-roadmap.md` for strategy
+3. Implement `sandwich-bot-solidity-implementation.md` for full stack
+4. Graduate to `sandwich-bot-rust-implementation.md` for performance
+
+**Path 3: Maximum Performance**
+1. Read all MEV attack guides first
+2. Study `sandwich-bot-rust-implementation.md`
+3. Analyze rusty-sando architecture deeply
+4. Build custom optimizations
+5. Target mainnet after extensive L2 testing
 
 ---
 
@@ -188,20 +291,23 @@ Advanced MEV extraction bots with sophisticated strategies.
 
 ---
 
-## Community Discussions (1 file)
+## Community Discussions (2 files)
 
-Real-world experiences and community insights from Reddit.
+Real-world experiences, community insights, and strategic analysis.
 
 | File | Source | Date | Description |
 |------|--------|------|-------------|
 | `discussions/reddit-flashloan-viability-discussion.md` | [Reddit r/defi](https://www.reddit.com/r/defi/comments/1iuu9um/) | Jan 2024 | Community discussion on flash loan arbitrage viability, competition, and challenges |
+| `discussions/flashloan-vs-mev-analysis.md` | Internal analysis | Nov 2025 | **2025 Strategic Analysis**: Comprehensive comparison of flash loan arbitrage vs MEV attack bots - profitability, ethics, infrastructure, legal risks, and recommendations |
 
-**Key Insights from Discussion:**
-- High competition from sophisticated MEV bots
+**Key Insights from Discussions:**
+- High competition from sophisticated MEV bots (sub-10ms detection required)
 - Infrastructure complexity (custom indexers required, not just smart contracts)
 - Gas costs and priority fees significantly impact profitability
 - MEV protection essential for competitive execution
 - Not recommended for beginners without significant capital and technical expertise
+- MEV attacks more profitable but ethically problematic and legally risky
+- Both strategies require $10K-150K+ setup and $2K-20K/month operating costs
 
 ---
 
@@ -235,6 +341,7 @@ Real-world experiences and community insights from Reddit.
 | **Optimal Amount Calculation** | `examples/github-da-bao-jian-swap-optimizer.md` |
 | **Real-Time Monitoring** | `examples/github-Soroushsrd-ArbiSearch.md`, `examples/github-Devilla-eth-arbitrage.md` |
 | **Profitability Analysis** | `tutorials/sahm-capital-flash-loan-profit.md`, `discussions/reddit-flashloan-viability-discussion.md` |
+| **Strategy Comparison (2025)** | `discussions/flashloan-vs-mev-analysis.md` - Flash loan arbitrage vs MEV attacks comparison |
 | **2025 Best Practices** | `tutorials/tas-flash-loan-bot-2025-guide.md` |
 | **No-Code Solution** | `tutorials/furucombo-flashloan-tutorial.md` |
 | **Python Analysis** | `examples/github-ccyanxyz-uniswap-arbitrage-analysis.md` |
@@ -401,9 +508,10 @@ Help me build a protected, gas-optimized flash loan bot.
 
 - **Core Documentation**: 7 files
 - **Tutorial Guides**: 21 files (includes MEV protection, optimization, and 2024-2025 trends)
+- **MEV Implementation Guides**: 5 files (NEW! Complete bot implementations with source code)
 - **GitHub Examples**: 41 files (includes 4 MEV bot repos with _dev files)
-- **Community Discussions**: 1 file
-- **Total**: 70 files
+- **Community Discussions**: 2 files
+- **Total**: 76 files
 
 ### Language Distribution (GitHub Examples)
 
@@ -473,14 +581,21 @@ When adding new documentation to this collection:
 
 ---
 
-**Last Updated:** November 12, 2024
+**Last Updated:** November 12, 2025
 **Maintained By:** Flash loan arbitrage documentation project
-**Total Content**: 70 comprehensive documentation files covering all aspects of flash loan arbitrage and MEV extraction
+**Total Content**: 76 comprehensive documentation files covering all aspects of flash loan arbitrage and MEV extraction
 
-**Recent Updates:**
+**Recent Updates (November 2025):**
+- 🚀 **MAJOR UPDATE:** Added 5 complete MEV bot implementation guides with full source code!
+  - `low-budget-sandwich-bot-roadmap.md` - Complete roadmap from $0 to L2 deployment
+  - `sandwich-bot-solidity-implementation.md` - Solidity + TypeScript full stack
+  - `sandwich-bot-typescript-implementation.md` - Beginner-friendly Node.js implementation
+  - `sandwich-bot-rust-implementation.md` - High-performance Rust implementation (based on rusty-sando)
+  - `sandwich-bot-python-implementation.md` - Learning/analysis implementation
+- ⭐ Added **flashloan-vs-mev-analysis.md** - Comprehensive 2025 strategic analysis comparing flash loan arbitrage vs MEV attack bots
 - ⭐ Added **understanding-sandwich-attacks.md** - 1500+ line comprehensive sandwich attack guide
 - ⭐ Enhanced **preventing-front-running-attacks.md** - 850+ line protection strategies guide
 - Added 4 new MEV bot examples: rusty-sando (857★), Ethereum-MEV-BOT (40★), Solana MEV (1,100★), EVM flash swap (156★)
 - Added 6 new tutorial guides: gas optimization, language comparison, speed optimization, 2024-2025 trends
 - Reorganized index for better navigation and topic discovery
-- Updated file counts: Core (7), Tutorials (21), Examples (41), Discussions (1) = 70 total
+- Updated file counts: Core (7), Tutorials (21), MEV Implementation (5), Examples (41), Discussions (2) = 76 total
