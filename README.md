@@ -45,8 +45,22 @@ This repository is a **curated knowledge base** designed to provide Claude (Anth
 | **🆕 Implementation Guides** | 5 files | **Complete source code** for Solidity, TypeScript, Rust, Python |
 | **GitHub Examples** | 41 files | Real implementations including rusty-sando (857⭐), advanced MEV bots |
 | **Community Discussions** | 2 files | Reddit insights, strategic analyses |
+| **🆕 Bot Examples** | 4 bots | **Production-ready TypeScript bots** with full source code |
 
 **Total:** ~25MB of markdown, ~2M+ tokens of comprehensive flash loan and MEV knowledge
+
+### 🤖 NEW: Production-Ready Bot Examples
+
+Four complete, educational TypeScript bots with full source code:
+
+| Bot | Type | Purpose | Status |
+|-----|------|---------|--------|
+| **[Sandwich Bot](sandwich-bot/)** | MEV Attack | Understand sandwich attacks | ✅ Complete |
+| **[Flashloan Arbitrage](aave-flashloan-bot/)** | DeFi Strategy | Aave V3 flashloan arbitrage | ✅ Complete |
+| **[Front-Running](aave-frontrun-bot/)** | MEV Detection | Detect & analyze front-running | ✅ Complete |
+| **[Back-Running](aave-backrun-bot/)** | MEV Strategy | Event-driven arbitrage | ✅ Complete |
+
+**See [BOTS.md](BOTS.md) for complete bot documentation and architecture diagrams.**
 
 ---
 
@@ -99,6 +113,7 @@ This repository is a **curated knowledge base** designed to provide Claude (Anth
 ```
 flashmillion/
 ├── README.md                          # This file - start here
+├── BOTS.md                           # 🆕 Complete bot documentation & architecture
 ├── CLAUDE.md                         # Project instructions for Claude
 │
 ├── context/                          # Main documentation library
@@ -133,7 +148,41 @@ flashmillion/
 │       ├── reddit-flashloan-viability-discussion.md
 │       └── flashloan-vs-mev-analysis.md
 │
-├── contracts/                        # Smart contracts (if you build)
+├── 🆕 sandwich-bot/                  # Sandwich attack bot (TypeScript)
+│   ├── src/
+│   │   ├── index.ts                 # Main bot logic
+│   │   ├── mempoolMonitor.ts        # Mempool transaction detection
+│   │   ├── profitCalculator.ts      # Sandwich profit simulation
+│   │   └── sandwichExecutor.ts      # Execution engine
+│   ├── contracts/
+│   │   └── SandwichContract.sol     # On-chain sandwich contract
+│   └── README.md                    # Bot documentation
+│
+├── 🆕 aave-flashloan-bot/            # Flashloan arbitrage bot (TypeScript)
+│   ├── src/
+│   │   ├── index.ts                 # Main bot logic
+│   │   ├── priceScanner.ts          # Multi-DEX price scanning
+│   │   ├── opportunityDetector.ts   # Arbitrage detection
+│   │   └── flashloanExecutor.ts     # Aave V3 integration
+│   ├── contracts/
+│   │   └── FlashloanArbitrage.sol   # Flashloan contract
+│   └── README.md                    # Bot documentation
+│
+├── 🆕 aave-frontrun-bot/             # Front-running detection bot (TypeScript)
+│   ├── src/
+│   │   ├── index.ts                 # Main bot logic
+│   │   ├── mempoolMonitor.ts        # Aave transaction detection
+│   │   └── opportunityAnalyzer.ts   # Front-run analysis
+│   └── README.md                    # Bot documentation
+│
+├── 🆕 aave-backrun-bot/              # Back-running bot (TypeScript)
+│   ├── src/
+│   │   ├── index.ts                 # Main bot logic
+│   │   ├── eventMonitor.ts          # Aave event monitoring
+│   │   └── opportunityDetector.ts   # Back-run detection
+│   └── README.md                    # Bot documentation
+│
+├── contracts/                        # Shared smart contracts
 ├── scripts/                          # Deployment scripts
 └── test/                            # Test suites
 ```

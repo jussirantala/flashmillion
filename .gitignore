@@ -1,1 +1,48 @@
+# Claude
 .claude
+
+# Node.js
+node_modules/
+package-lock.json
+yarn.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+dist/
+build/
+*.tsbuildinfo
+
+# Hardhat & Foundry
+cache/
+artifacts/
+out/
+broadcast/
+
+# Coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Test
+test-results/
+playwright-report/

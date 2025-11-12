@@ -1,0 +1,28 @@
+{
+  "name": "aave-flashloan-arbitrage-bot",
+  "version": "1.0.0",
+  "description": "Educational Aave V3 flashloan arbitrage bot",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": ["aave", "flashloan", "arbitrage", "defi", "education"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^6.9.0",
+    "dotenv": "^16.3.1",
+    "@aave/core-v3": "^1.19.0",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
+    "@uniswap/v3-periphery": "^1.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.2",
+    "ts-node": "^10.9.1",
+    "nodemon": "^3.0.2"
+  }
+}
